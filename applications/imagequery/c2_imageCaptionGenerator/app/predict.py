@@ -49,11 +49,11 @@ g.finalize()
 
 # Create the vocabulary.
 vocab = vocabulary.Vocabulary(vocabulary_path)
-filenames = []
-for file_pattern in FLAGS.input_files.split(","):
-    filenames.extend(tf.gfile.Glob(file_pattern))
-tf.logging.info("Running caption generation on %d files matching %s", len(
-    filenames), FLAGS.input_files)
+
+# filenames = []
+# for file_pattern in FLAGS.input_files.split(","):
+#     filenames.extend(tf.gfile.Glob(file_pattern))
+# tf.logging.info("Running caption generation on %d files matching %s", len(filenames), FLAGS.input_files)
 
 print("Finished building inference graph and creating vocabulary list...")
 

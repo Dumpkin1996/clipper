@@ -13,7 +13,7 @@ RUN pip3 install grpcio
 RUN pip3 install protobuf
 
 
-ADD container2/app /container/
+ADD FatigueDetection/container2/app /container/
 ADD grpc/app/container_entry.sh /container/
 ADD grpc/app/server.py /container/
 ADD grpc/app/model_pb2_grpc.py /container/

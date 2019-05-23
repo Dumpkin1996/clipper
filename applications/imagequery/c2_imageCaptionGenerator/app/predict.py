@@ -55,8 +55,6 @@ vocab = vocabulary.Vocabulary(vocabulary_path)
 #     filenames.extend(tf.gfile.Glob(file_pattern))
 # tf.logging.info("Running caption generation on %d files matching %s", len(filenames), FLAGS.input_files)
 
-print("Finished building inference graph and creating vocabulary list...")
-
 sess = tf.Session(graph=g) 
 # Load the model from checkpoint.
 restore_fn(sess)
@@ -64,7 +62,7 @@ restore_fn(sess)
 # Prepare the caption generator.
 generator = caption_generator.CaptionGenerator(model, vocab)
 
-   
+print("Finished building inference graph and creating vocabulary list...")
 
 
 def predict(image_file_index):

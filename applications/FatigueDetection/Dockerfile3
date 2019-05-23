@@ -14,7 +14,7 @@ RUN pip3 install git+https://github.com/philferriere/cocoapi.git#egg=pycocotools
 RUN pip3 install tensorflow-gpu
 RUN pip3 install keras
 RUN pip3 install imgaug
-ADD container3/app /container/
+ADD FatigueDetection/container3/app /container/
 
 ADD grpc/app/container_entry.sh /container/
 ADD grpc/app/server.py /container/

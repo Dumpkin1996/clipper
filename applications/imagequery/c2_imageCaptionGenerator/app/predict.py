@@ -29,7 +29,7 @@ model_dir_path = find("model", "/container")
 check_point_path = model_dir_path + "/newmodel.ckpt-2000000"
 vocabulary_path = find("word_counts.txt", "/")
 image_path = find("image.jpg", "/")
-#setupTensorflowEnvironmentCmd = "python " + run_inference_path + " --checkpoint_path " + check_point_path + " --vocab_file " + vocabulary_path + " --input_files " + image_path
+# setupTensorflowEnvironmentCmd = "python " + run_inference_path + " --checkpoint_path " + check_point_path + " --vocab_file " + vocabulary_path + " --input_files " + image_path
 # os.system(setupTensorflowEnvironmentCmd)
 
 
@@ -44,8 +44,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 g = tf.Graph()
 with g.as_default():
     model = inference_wrapper.InferenceWrapper()
-    restore_fn = model.build_graph_from_config(
-        configuration.ModelConfig(), FLAGS.checkpoint_path)
+    restore_fn = model.build_graph_from_config(configuration.ModelConfig(), check_point_path)
 g.finalize()
 
 # Create the vocabulary.
@@ -77,7 +76,7 @@ def predict(image_file_index):
     image_file_path = "/container/im2txt/data/imageDataset/101_ObjectCategories/image_" + \
         str(image_file_index).zfill(4) + ".jpg"
 
- # added by YIN Yue
+    # added by YIN Yue
     captionList = ["", "", ""]
     with tf.gfile.GFile(image_file_path, "rb") as f:
         image = f.read()

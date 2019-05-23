@@ -28,12 +28,12 @@ run_inference_path = find("run_inference.py", "/")
 model_dir_path = find("model", "/container")
 check_point_path = model_dir_path + "/newmodel.ckpt-2000000"
 vocabulary_path = find("word_counts.txt", "/")
-image_path = find("image.jpg", "/")
+# image_path = find("image.jpg", "/")
 # setupTensorflowEnvironmentCmd = "python " + run_inference_path + " --checkpoint_path " + check_point_path + " --vocab_file " + vocabulary_path + " --input_files " + image_path
 # os.system(setupTensorflowEnvironmentCmd)
 
 
-FLAGS = tf.flags.FLAGS
+# FLAGS = tf.flags.FLAGS
 #tf.flags.DEFINE_string("checkpoint_path", "", "Model checkpoint file or directory containing a model checkpoint file.")
 #tf.flags.DEFINE_string("vocab_file", "", "Text file containing the vocabulary.")
 #tf.flags.DEFINE_string("input_files", "", "File pattern or comma-separated list of file patterns of image files.")
@@ -82,8 +82,7 @@ def predict(image_file_index):
         print("Captions for image %s:" % os.path.basename(filename))
         for i, caption in enumerate(captions):
             # Ignore begin and end words.
-            sentence = [vocab.id_to_word(w)
-                        for w in caption.sentence[1:-1]]
+            sentence = [vocab.id_to_word(w) for w in caption.sentence[1:-1]]
             sentence = " ".join(sentence)
             captionList[i] = sentence
             print("  %d) %s (p=%f)" %

@@ -72,6 +72,7 @@ def predict(imstr):
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
+    print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
     return imagestring
     
     

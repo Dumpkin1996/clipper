@@ -36,6 +36,8 @@ inWidth = 368
 inHeight = 368
 
 def predict(imagestring):
+    if imagestring is None:
+        return False
     frame=string_image(imagestring)
     frameCopy = np.copy(frame)
     frameWidth = frame.shape[1]

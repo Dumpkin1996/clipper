@@ -37,6 +37,7 @@ inHeight = 368
 
 def predict(imagestring):
     if imagestring is None:
+        print("\n[INFO] Pose Detection FINISHED!")
         return False
     frame=string_image(imagestring)
     frameCopy = np.copy(frame)
@@ -103,6 +104,7 @@ def predict(imagestring):
     #cv2.imshow('Output-Keypoints', frameCopy)
     #cv2.imshow('Output-Skeleton', frame)
     #cv2.waitKey(0)
+    print("\n[INFO] Pose Detection FINISHED!")
     if variance>20000:
         return True
     else:

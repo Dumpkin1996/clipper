@@ -55,6 +55,7 @@ predictor = dlib.shape_predictor('/container/container2/app/shape_predictor_68_f
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
     if imagestring is None:
+        print("\n[INFO] Drowsiness Detection FINISHED!")
         return False
     frame=string_image(imagestring)
 #    frame = cv2.imread("5.jpeg")
@@ -92,6 +93,7 @@ def predict(imagestring):
 #        cv2.waitKey(0)
         # do a bit of cleanup
         cv2.destroyAllWindows()
+    print("\n[INFO] Drowsiness Detection FINISHED!")
     return drowsiness
 
 #image=cv2.imread("sleep.jpg")

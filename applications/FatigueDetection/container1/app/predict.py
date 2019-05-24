@@ -52,6 +52,7 @@ def predict(imagestring):
         print("[INFO] No face in this image!")
         return None
     image_str=image_string(frame)
+    print("\n[INFO] Face Extraction FINISHED!")
     return image_str
 
 #image=cv2.imread('sleep.jpg')

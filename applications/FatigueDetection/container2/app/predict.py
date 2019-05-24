@@ -53,7 +53,9 @@ predictor = dlib.shape_predictor('/container/container2/app/shape_predictor_68_f
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 # imagestring is a serialized .jpg encoded image string
-def predict(imagestring):
+def predict(imagestring):      
+    if imagestring is None:
+        return False
     frame=string_image(imagestring)
 #    frame = cv2.imread("5.jpeg")
     frame = imutils.resize(frame, width=450)

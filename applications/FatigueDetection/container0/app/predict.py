@@ -29,6 +29,7 @@ def predict(sudostring):
     
     print("\n[INFO] Get a Input Request!")
     inputstring=image_string(random_image)
+    inputstring=str(inputstring)
     return inputstring
 
 

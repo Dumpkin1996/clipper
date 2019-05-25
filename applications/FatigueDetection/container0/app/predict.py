@@ -21,7 +21,6 @@ def string_image(imagestring):
 
 def predict(sudostring):
     filelist=[f for f in os.listdir("/container/part1") if f.endswith(".jpg")]
-    print("\n[INFO] Get a Input Request!")
     index=random.randint(0,10000)
     random_image=cv2.imread("/container/part1/"+str(filelist[index]))
     while random_image is None:

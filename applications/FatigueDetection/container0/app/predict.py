@@ -26,6 +26,8 @@ def predict(sudostring):
     while random_image is None:
         index=random.randint(0,10000)
         random_image=cv2.imread("part1/"+str(filelist[index]))
+    
+    print("\n[INFO] Get a Input Request!")
     inputstring=image_string(random_image)
     return inputstring
 

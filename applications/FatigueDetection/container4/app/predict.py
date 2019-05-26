@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 22 15:03:22 2019
-
-@author: davidzhou
-"""
-
 import cv2
 import numpy as np
 import os
@@ -34,6 +26,8 @@ POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[1,8],[8,9],[9,10],[1,1
 # input image dimensions for the network
 inWidth = 368
 inHeight = 368
+
+COUNT=0
 
 def predict(imagestring):
     if imagestring is None:
@@ -106,14 +100,17 @@ def predict(imagestring):
     #cv2.waitKey(0)
     print("\n[INFO] Pose Detection FINISHED!")
     if variance>20000:
+        COUNT=COUNT+1
+        print("\n[INFO] WARNING! MAY BE TIRED!")
+    else:
+        COUNT=COUNT-1
+    if COUNT > 12:
         return True
     else:
         return False
+    
 
 
-#frame = cv2.imread("awake.jpg")
-#mystr=image_string(frame)
-#x=predict(mystr)
 
         
         

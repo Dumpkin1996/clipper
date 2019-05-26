@@ -2525,7 +2525,7 @@ class MaskRCNN():
         # Run object detection
         global Gragh
         with Graph[0].as_default():
-	    detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
+            detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
 
         # Process detections
        	results = []

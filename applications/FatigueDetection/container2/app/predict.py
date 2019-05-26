@@ -52,6 +52,8 @@ predictor = dlib.shape_predictor('/container/shape_predictor_68_face_landmarks.d
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
+COUNT=0
+
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
     if imagestring is None:
@@ -82,8 +84,10 @@ def predict(imagestring):
         if ear<EYE_AR_THRESH:
             cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
             drowsiness=True
+            COUNT=COUNT+1
         else:
             drowsiness=False
+            COUNT=COUNT-1
         #simple memcached
         #if not os.path.exists('faces'):
          #   print("[INFO] New directory created")
@@ -94,13 +98,10 @@ def predict(imagestring):
         # do a bit of cleanup
         cv2.destroyAllWindows()
     print("\n[INFO] Drowsiness Detection FINISHED!")
-    return drowsiness
+    if COUNT>12:
+        return True
+    else:
+        return False
 
-#image=cv2.imread("sleep.jpg")
-#image_encode=cv2.imencode('.jpg',image)[1]
-#image_array=np.array(image_encode)
-#image_string=image_array.tostring()
-#x=predict(image_string)
-#print(x)
 
 

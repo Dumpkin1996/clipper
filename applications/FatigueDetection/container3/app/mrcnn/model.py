@@ -35,6 +35,8 @@ assert LooseVersion(keras.__version__) >= LooseVersion('2.0.8')
 #  Utility Functions
 ############################################################
 
+Graph=[]
+
 def log(text, array=None):
     """Prints a text message. And, optionally, if a Numpy array is provided it
     prints it's shape, min, and max values.
@@ -2121,7 +2123,7 @@ class MaskRCNN():
         keras_model = self.keras_model
         layers = keras_model.inner_model.layers if hasattr(keras_model, "inner_model")\
             else keras_model.layers
-
+	
         # Exclude some layers
         if exclude:
             layers = filter(lambda l: l.name not in exclude, layers)
@@ -2132,9 +2134,10 @@ class MaskRCNN():
             saving.load_weights_from_hdf5_group(f, layers)
         if hasattr(f, 'close'):
             f.close()
-
+        
         # Update the log directory
         self.set_log_dir(filepath)
+	Graph.append(tf.get_default_graph())
 
     def get_imagenet_weights(self):
         """Downloads ImageNet trained weights from Keras.
@@ -2520,9 +2523,10 @@ class MaskRCNN():
             log("image_metas", image_metas)
        	    log("anchors", anchors)
         # Run object detection
-        self.keras_model._make_predict_function()
-        detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
-        clear_session()
+        global Gragh
+        with Graph[0].as_default(): 
+        	detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
+
         # Process detections
        	results = []
         for i, image in enumerate(images):

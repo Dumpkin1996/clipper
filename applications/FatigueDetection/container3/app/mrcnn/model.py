@@ -2518,12 +2518,12 @@ class MaskRCNN():
         if verbose:
             log("molded_images", molded_images)
             log("image_metas", image_metas)
-            log("anchors", anchors)
+       	    log("anchors", anchors)
         # Run object detection
-	detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
-	clear_session()
+        detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
+        clear_session()
         # Process detections
-        results = []
+       	results = []
         for i, image in enumerate(images):
             final_rois, final_class_ids, final_scores, final_masks =\
                 self.unmold_detections(detections[i], mrcnn_mask[i],

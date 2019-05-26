@@ -16,8 +16,8 @@ def cleanSentences(string):
     string = string.lower().replace("<br />", " ")
     return re.sub(strip_special_chars, "", string.lower())
 
-wordVectors = np.load('container/wordVectors.npy')
-wordsList = np.load('container/wordsList.npy')
+wordVectors = np.load('/container/wordVectors.npy')
+wordsList = np.load('/container/wordsList.npy')
 print('Loaded the word list!')
 wordsList = wordsList.tolist() #Originally loaded as numpy array
 wordsList = [word.decode('UTF-8') for word in wordsList] #Encode words as UTF-8

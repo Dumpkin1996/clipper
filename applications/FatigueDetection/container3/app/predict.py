@@ -54,15 +54,13 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
-graph = tf.get_default_graph()
+
 
 def predict(imstr):
     image=string_image(imstr)
     
     # Run detection
-    global graph
-    with graph.as_default():
-        results = model.detect([image], verbose=1)
+    results = model.detect([image], verbose=1)
     
     # Visualize results
     r = results[0]

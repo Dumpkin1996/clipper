@@ -22,7 +22,7 @@ import keras.backend as K
 import keras.layers as KL
 import keras.engine as KE
 import keras.models as KM
-
+from keras.backend import clear_session
 from mrcnn import utils
 
 # Requires TensorFlow 1.3+ and Keras 2.0.8+.
@@ -2523,6 +2523,7 @@ class MaskRCNN():
 	self.keras_model._make_predict_function()
         detections, _, _, mrcnn_mask, _, _, _ =\
             self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
+	clear_session()
         # Process detections
         results = []
         for i, image in enumerate(images):

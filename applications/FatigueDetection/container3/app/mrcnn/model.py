@@ -2520,7 +2520,6 @@ class MaskRCNN():
             log("image_metas", image_metas)
             log("anchors", anchors)
         # Run object detection
-	self.keras_model._make_predict_function()
 	detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
 	clear_session()
         # Process detections

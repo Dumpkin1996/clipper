@@ -1,4 +1,5 @@
 import numpy as np
+import time
 #import skimage.io
 #import matplotlib as mpl
 #mpl.use('TkAgg')
@@ -22,6 +23,7 @@ def string_image(imagestring):
     arr=np.uint8(arr)
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
+load_start=time.time()
 
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -55,8 +57,12 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
 
+load_end=time.time()
+
+print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 
 def predict(imstr):
+    start=time.time()
     image=string_image(imstr)
     
     # Run detection
@@ -75,6 +81,8 @@ def predict(imstr):
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
     print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
+    end=time.time()
+    print("\n[INFO] C3 time:"+str(end-start))
     return imagestring
     
     

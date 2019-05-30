@@ -11,7 +11,7 @@ import dlib
 import cv2
 import os
 import json
-
+import time
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -40,7 +40,7 @@ def eye_aspect_ratio(eye):
 
     # return the eye aspect ratio
     return ear
-
+load_start=time.time()
 
 EYE_AR_THRESH = 0.28
 print("[INFO] loading facial landmark predictor...")
@@ -53,9 +53,13 @@ predictor = dlib.shape_predictor('/container/shape_predictor_68_face_landmarks.d
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 COUNT=0
+load_end=time.time()
+
+print("\n[INFO] C2 LOAD:"+str(load_end-load_start))
 
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
+    start=time.time()
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
         return False
@@ -98,6 +102,8 @@ def predict(imagestring):
         # do a bit of cleanup
         cv2.destroyAllWindows()
     print("\n[INFO] Drowsiness Detection FINISHED!")
+    end=time.time()
+    print("\n[INFO] C2 time:"+str(end-start))
     if COUNT>12:
         return True
     else:

@@ -3,13 +3,17 @@ import os
 import cv2
 import numpy as np
 import json
+import time 
 
+loads=time.time()
 # Read the model
 model = cv2.dnn.readNetFromCaffe('/container/deploy.prototxt','/container/weights.caffemodel')
 
 #imagestring is a serialized .jpg encoded image string
 
+loade=time.time()
 
+print("\n[INFO] C1 LOAD:"+str(loade-loads))
 
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
@@ -26,6 +30,7 @@ def string_image(imagestring):
 
 
 def predict(imagestring):
+    start=time.time()
     image=string_image(imagestring)
 #    image=cv2.imread('simple.jpg')  
     count = 0
@@ -53,6 +58,8 @@ def predict(imagestring):
         return None
     image_str=image_string(frame)
     print("\n[INFO] Face Extraction FINISHED!")
+    end=time.time()
+    print("\n[INFO] C1 time:"+str(end-start))
     return image_str
 
 #image=cv2.imread('sleep.jpg')

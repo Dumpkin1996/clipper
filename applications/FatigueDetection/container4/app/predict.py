@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import json
+import time
 
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
@@ -16,6 +17,7 @@ def string_image(imagestring):
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
 
+load_start=time.time()
 
 protoFile = "/container/pose_deploy_linevec.prototxt"
 weightsFile = "/container/pose_iter_440000.caffemodel"
@@ -29,7 +31,12 @@ inHeight = 368
 
 COUNT=0
 
+load_end=time.time()
+
+print("\n[INFO] C4 LOAD:"+str(load_end-load_start))
+
 def predict(imagestring):
+    start=time.time()
     if imagestring is None:
         print("\n[INFO] Pose Detection FINISHED!")
         return False
@@ -104,6 +111,8 @@ def predict(imagestring):
         print("\n[INFO] WARNING! MAY BE TIRED!")
     else:
         COUNT=COUNT-1
+    end=time.time()
+    print("\n[INFO] C4 time:"+str(end-start))
     if COUNT > 12:
         return True
     else:

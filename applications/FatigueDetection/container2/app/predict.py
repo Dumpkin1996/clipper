@@ -94,15 +94,7 @@ def predict(imagestring):
         else:
             drowsiness=False
             COUNT=COUNT-1
-        #simple memcached
-        #if not os.path.exists('faces'):
-         #   print("[INFO] New directory created")
-          #  os.makedirs('faces')
-        #cv2.imwrite('container/faces/eyearea.jpg', frame)
-#        cv2.imshow("Frame", frame)
-#        cv2.waitKey(0)
-        # do a bit of cleanup
-#         cv2.destroyAllWindows()
+    
     print("\n[INFO] Drowsiness Detection FINISHED!")
     end=time.time()
     print("\n[INFO] C2 time:"+str(end-start))
@@ -110,6 +102,9 @@ def predict(imagestring):
         return True
     else:
         return False
+
+#         cv2.destroyAllWindows()
+
 
 
 

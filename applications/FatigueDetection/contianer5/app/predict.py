@@ -1,10 +1,10 @@
 import time
 def predict(received):
     start=time.time()
-    print("Received Output:%s"%(received))
+    print("\n[INFO] Received Output:%s"%(received))
     end=time.time()
-    print("C5 time:"+str(end-start))
-    return "Financial Analysis finished"
+    print("\n[INFO] C5 time:"+str(end-start))
+    return "\n[INFO] Fatigue Detection finished"
     
 # def predict(price_pred_list, trend_pred, polarity_list):
 

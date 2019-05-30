@@ -62,6 +62,8 @@ def predict(imagestring):
     start=time.time()
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
+        end=time.time()
+        print("\n[INFO] C2 time:"+str(end-start))
         return False
     frame=string_image(imagestring)
 #    frame = cv2.imread("5.jpeg")
@@ -100,7 +102,7 @@ def predict(imagestring):
 #        cv2.imshow("Frame", frame)
 #        cv2.waitKey(0)
         # do a bit of cleanup
-        cv2.destroyAllWindows()
+#         cv2.destroyAllWindows()
     print("\n[INFO] Drowsiness Detection FINISHED!")
     end=time.time()
     print("\n[INFO] C2 time:"+str(end-start))

@@ -41,7 +41,7 @@ def eye_aspect_ratio(eye):
 
     # return the eye aspect ratio
     return ear
-load_start=timer()
+load_start=time.time()
 
 EYE_AR_THRESH = 0.28
 print("[INFO] loading facial landmark predictor...")
@@ -54,13 +54,13 @@ predictor = dlib.shape_predictor('/container/shape_predictor_68_face_landmarks.d
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 COUNT=0
-load_end=timer()
+load_end=time.time()
 
 print("\n[INFO] C2 LOAD:"+str(load_end-load_start))
 
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
-    start=timer()
+    start=time.time()
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
         end=time.time()
@@ -91,12 +91,14 @@ def predict(imagestring):
             drowsiness=False
             COUNT=COUNT-1
         print("\n[INFO] Drowsiness Detection FINISHED!")
-        end=timer()
+        end=time.time()
         print("\n[INFO] C2 time:"+str(end-start))
+        x="Ture"
+        y="False"
         if COUNT>6:
-            return "True"
+            return x
         else:
-            return "Flase"
+            return y
       
 
 

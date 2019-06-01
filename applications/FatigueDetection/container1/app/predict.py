@@ -47,20 +47,19 @@ def predict(imagestring):
         if (confidence > 0.5):
             count += 1
             frame = image[startY:endY, startX:endX]
+            image_str=image_string(frame)
+            end=timer()
+            print("\n[INFO] C1 time:"+str(end-start))
+            return image_str
             #memcached for all the faces detected
 #            if not os.path.exists('faces'):
 #                print("New directory created")
 #                os.makedirs('faces')
 #            cv2.imwrite('container' + '/faces/' + str(i) + '_' + 'face.jpg', frame)
-    print("Extracted " + str(count) + " faces from all images")
-    if count==0:
-        print("[INFO] No face in this image!")
-        return None
-    image_str=image_string(frame)
-    print("\n[INFO] Face Extraction FINISHED!")
-    end=timer()
-    print("\n[INFO] C1 time:"+str(end-start))
-    return image_str
+    return None
+    
+    
+    
 
 #image=cv2.imread('sleep.jpg')
 #image_encode=cv2.imencode('.jpg',image)[1]

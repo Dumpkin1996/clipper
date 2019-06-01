@@ -33,7 +33,7 @@ def predict(sudostring):
     inputstring=image_string(random_image)
     inputstring=str(inputstring)
     end=timer()
-    print("\n[INFO] C0 time"+str(end-start))
+    print("\n[INFO] C0 time: "+str(end-start))
     return inputstring
 
 

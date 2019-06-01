@@ -76,22 +76,27 @@ def predict(imagestring):
     for rect in rects:
         print("\n[INFO] Successfully detected faces!")
         shape = predictor(gray, rect)
-        print("\n test0!")
         shape = face_utils.shape_to_np(shape)
-        print("\n test1!")
         leftEye = shape[lStart:lEnd]
         rightEye = shape[rStart:rEnd]
         leftEAR = eye_aspect_ratio(leftEye)
         rightEAR = eye_aspect_ratio(rightEye)
         # average the eye aspect ratio together for both eyes
         ear = (leftEAR + rightEAR) / 2.0
-        print("\n test2!")
         if ear<EYE_AR_THRESH:
+            print("\ntest1!")
             drowsiness=True
             COUNT=COUNT+1
+            print("\n[INFO] Drowsiness Detection FINISHED!")
+            end=time.time()
+            print("\n[INFO] C2 time:"+str(end-start))
         else:
+            print("\ntest2!")
             drowsiness=False
             COUNT=COUNT-1
+            print("\n[INFO] Drowsiness Detection FINISHED!")
+            end=time.time()
+            print("\n[INFO] C2 time:"+str(end-start))
         print("\n[INFO] Drowsiness Detection FINISHED!")
         end=time.time()
         print("\n[INFO] C2 time:"+str(end-start))

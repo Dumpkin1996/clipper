@@ -62,7 +62,7 @@ load_end=timer()
 print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 
 def predict(imstr):
-    start=timer()
+    start=time.time()
     image=string_image(imstr)
     
     # Run detection
@@ -83,7 +83,7 @@ def predict(imstr):
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
     print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
-    end=timer()
+    end=time.time()
     print("\n[INFO] C3 time:"+str(end-start))
     return imagestring
     

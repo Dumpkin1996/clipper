@@ -5,13 +5,13 @@ import numpy as np
 import json
 import time 
 from timeit import default_timer as timer
-loads=timer()
+loads=time.time()
 # Read the model
 model = cv2.dnn.readNetFromCaffe('/container/deploy.prototxt','/container/weights.caffemodel')
 
 #imagestring is a serialized .jpg encoded image string
 
-loade=timer()
+loade=time.time()
 
 print("\n[INFO] C1 LOAD:"+str(loade-loads))
 
@@ -30,7 +30,7 @@ def string_image(imagestring):
 
 
 def predict(imagestring):
-    start=timer()
+    start=time.time()
     image=string_image(imagestring)
 #    image=cv2.imread('simple.jpg')  
     count = 0
@@ -48,7 +48,7 @@ def predict(imagestring):
             count += 1
             frame = image[startY:endY, startX:endX]
             image_str=image_string(frame)
-            end=timer()
+            end=time.time()
             print("\n[INFO] C1 time:"+str(end-start))
             return image_str
             #memcached for all the faces detected

@@ -51,11 +51,8 @@ def predict(imagestring):
             end=time.time()
             print("\n[INFO] C1 time:"+str(end-start))
             return image_str
-            #memcached for all the faces detected
-#            if not os.path.exists('faces'):
-#                print("New directory created")
-#                os.makedirs('faces')
-#            cv2.imwrite('container' + '/faces/' + str(i) + '_' + 'face.jpg', frame)
+    end=time.time()
+    print("\n[INFO] C1 time:"+str(end-start))
     return None
     
     

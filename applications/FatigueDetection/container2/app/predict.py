@@ -84,7 +84,6 @@ def predict(imagestring):
         # average the eye aspect ratio together for both eyes
         ear = (leftEAR + rightEAR) / 2.0
         if ear<EYE_AR_THRESH:
-            cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
             drowsiness=True
             COUNT=COUNT+1
         else:
@@ -99,6 +98,7 @@ def predict(imagestring):
             return x
         else:
             return y
+    return None
       
 
 

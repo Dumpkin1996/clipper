@@ -17,7 +17,7 @@ def string_image(imagestring):
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
 
-load_start=timer()
+load_start=time.time()
 
 protoFile = "/container/pose_deploy_linevec.prototxt"
 weightsFile = "/container/pose_iter_440000.caffemodel"
@@ -31,12 +31,12 @@ inHeight = 368
 
 COUNT=0
 
-load_end=timer()
+load_end=time.time()
 
 print("\n[INFO] C4 LOAD:"+str(load_end-load_start))
 
 def predict(imagestring):
-    start=timer()
+    start=time.time()
     if imagestring is None:
         end=timer()
         print("\n[INFO] c4 time: "+str(end-start))
@@ -87,29 +87,21 @@ def predict(imagestring):
             points.append(None)
     
     add=add/count
-    variance=(square-add*add)/(count-1)
-    
-    # Draw Skeleton
-    for pair in POSE_PAIRS:
-        partA = pair[0]
-        partB = pair[1]
-    
-        if points[partA] and points[partB]:
-            cv2.line(frame, points[partA], points[partB], (0, 255, 255), 2)
-            cv2.circle(frame, points[partA], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
-            
+    variance=(square-add*add)/(count-1)     
     print("\n[INFO] Pose Detection FINISHED!")
     if variance>20000:
         COUNT=COUNT+1
         print("\n[INFO] WARNING! MAY BE TIRED!")
     else:
         COUNT=COUNT-1
-    end=timer()
+    end=time.time()
+    x="True"
+    y="False"
     print("\n[INFO] C4 time:"+str(end-start))
     if COUNT > 6:
-        return "True"
+        return x
     else:
-        return "False"
+        return y
     
 
 

@@ -77,7 +77,7 @@ def predict(imstr):
         r['rois']=np.array([r['rois'][pos]])
         r['scores']=np.array([r['scores'][pos]])
     else:
-        end=timer()
+        end=time.time()
         print("\n[INFO] C3 time:"+str(end-start))
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])

@@ -36,6 +36,7 @@ load_end=time.time()
 print("\n[INFO] C4 LOAD:"+str(load_end-load_start))
 
 def predict(imagestring):
+    return imagestring
     start=time.time()
     if imagestring is None:
         end=timer()

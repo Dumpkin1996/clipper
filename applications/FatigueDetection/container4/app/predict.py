@@ -3,7 +3,7 @@ import numpy as np
 import os
 import json
 import time
-
+from timeit import default_timer as timer
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -17,7 +17,7 @@ def string_image(imagestring):
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
 
-load_start=time.time()
+load_start=timer()
 
 protoFile = "/container/pose_deploy_linevec.prototxt"
 weightsFile = "/container/pose_iter_440000.caffemodel"
@@ -31,13 +31,15 @@ inHeight = 368
 
 COUNT=0
 
-load_end=time.time()
+load_end=timer()
 
 print("\n[INFO] C4 LOAD:"+str(load_end-load_start))
 
 def predict(imagestring):
-    start=time.time()
+    start=timer()
     if imagestring is None:
+        end=timer()
+        print("\n[INFO] c4 time: "+str(end-start))
         print("\n[INFO] Pose Detection FINISHED!")
         return False
     frame=string_image(imagestring)
@@ -111,7 +113,7 @@ def predict(imagestring):
         print("\n[INFO] WARNING! MAY BE TIRED!")
     else:
         COUNT=COUNT-1
-    end=time.time()
+    end=timer()
     print("\n[INFO] C4 time:"+str(end-start))
     if COUNT > 12:
         return True

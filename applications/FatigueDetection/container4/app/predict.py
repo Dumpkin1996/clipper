@@ -97,16 +97,7 @@ def predict(imagestring):
         if points[partA] and points[partB]:
             cv2.line(frame, points[partA], points[partB], (0, 255, 255), 2)
             cv2.circle(frame, points[partA], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
-
-    #memchached
-    #if not os.path.exists('poses'):
-     #       print("[INFO] New directory created")
-      #      os.makedirs('poses')
-    #cv2.imwrite('poses/Output-Keypoints.jpg', frameCopy)
-    #cv2.imwrite('poses/Output-Skeleton.jpg', frame)
-    #cv2.imshow('Output-Keypoints', frameCopy)
-    #cv2.imshow('Output-Skeleton', frame)
-    #cv2.waitKey(0)
+            
     print("\n[INFO] Pose Detection FINISHED!")
     if variance>20000:
         COUNT=COUNT+1
@@ -116,9 +107,9 @@ def predict(imagestring):
     end=timer()
     print("\n[INFO] C4 time:"+str(end-start))
     if COUNT > 12:
-        return True
+        return str(True)
     else:
-        return False
+        return str(False)
     
 
 

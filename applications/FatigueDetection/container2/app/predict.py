@@ -83,11 +83,6 @@ def predict(imagestring):
         rightEAR = eye_aspect_ratio(rightEye)
         # average the eye aspect ratio together for both eyes
         ear = (leftEAR + rightEAR) / 2.0
-        leftEyeHull = cv2.convexHull(leftEye)
-        rightEyeHull = cv2.convexHull(rightEye)
-        cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
-        cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-        cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         if ear<EYE_AR_THRESH:
             cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
             drowsiness=True
@@ -95,14 +90,15 @@ def predict(imagestring):
         else:
             drowsiness=False
             COUNT=COUNT-1
-    
-    print("\n[INFO] Drowsiness Detection FINISHED!")
-    end=timer()
-    print("\n[INFO] C2 time:"+str(end-start))
-    if COUNT>12:
-        return True
-    else:
-        return False
+        print("\n[INFO] Drowsiness Detection FINISHED!")
+        end=timer()
+        print("\n[INFO] C2 time:"+str(end-start))
+        if COUNT>6:
+            return True
+        else:
+            return False
+      
+
 
 #         cv2.destroyAllWindows()
 

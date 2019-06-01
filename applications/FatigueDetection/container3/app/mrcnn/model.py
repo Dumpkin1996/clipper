@@ -2523,7 +2523,7 @@ class MaskRCNN():
             log("image_metas", image_metas)
        	    log("anchors", anchors)
         # Run object detection
-        global Gragh
+        global Graph
         with Graph[0].as_default():
             detections, _, _, mrcnn_mask, _, _, _ =self.keras_model.predict([molded_images, image_metas, anchors], verbose=0)
 

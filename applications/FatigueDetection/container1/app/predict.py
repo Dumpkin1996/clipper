@@ -4,14 +4,14 @@ import cv2
 import numpy as np
 import json
 import time 
-
-loads=time.time()
+from timeit import default_timer as timer
+loads=timer()
 # Read the model
 model = cv2.dnn.readNetFromCaffe('/container/deploy.prototxt','/container/weights.caffemodel')
 
 #imagestring is a serialized .jpg encoded image string
 
-loade=time.time()
+loade=timer()
 
 print("\n[INFO] C1 LOAD:"+str(loade-loads))
 
@@ -30,7 +30,7 @@ def string_image(imagestring):
 
 
 def predict(imagestring):
-    start=time.time()
+    start=timer()
     image=string_image(imagestring)
 #    image=cv2.imread('simple.jpg')  
     count = 0
@@ -47,20 +47,19 @@ def predict(imagestring):
         if (confidence > 0.5):
             count += 1
             frame = image[startY:endY, startX:endX]
+            image_str=image_string(frame)
+            end=timer()
+            print("\n[INFO] C1 time:"+str(end-start))
+            return image_str
             #memcached for all the faces detected
 #            if not os.path.exists('faces'):
 #                print("New directory created")
 #                os.makedirs('faces')
 #            cv2.imwrite('container' + '/faces/' + str(i) + '_' + 'face.jpg', frame)
-    print("Extracted " + str(count) + " faces from all images")
-    if count==0:
-        print("[INFO] No face in this image!")
-        return None
-    image_str=image_string(frame)
-    print("\n[INFO] Face Extraction FINISHED!")
-    end=time.time()
-    print("\n[INFO] C1 time:"+str(end-start))
-    return image_str
+    return None
+    
+    
+    
 
 #image=cv2.imread('sleep.jpg')
 #image_encode=cv2.imencode('.jpg',image)[1]

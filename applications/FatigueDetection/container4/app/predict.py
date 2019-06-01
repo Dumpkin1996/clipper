@@ -106,10 +106,10 @@ def predict(imagestring):
         COUNT=COUNT-1
     end=timer()
     print("\n[INFO] C4 time:"+str(end-start))
-    if COUNT > 12:
-        return str(True)
+    if COUNT > 6:
+        return "True"
     else:
-        return str(False)
+        return "False"
     
 
 

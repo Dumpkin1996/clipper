@@ -94,9 +94,9 @@ def predict(imagestring):
         end=timer()
         print("\n[INFO] C2 time:"+str(end-start))
         if COUNT>6:
-            return True
+            return "True"
         else:
-            return False
+            return "Flase"
       
 
 

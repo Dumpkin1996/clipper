@@ -10,7 +10,7 @@ from samples.coco import coco
 import mrcnn.model as modellib
 import tensorflow as tf
 #import imgaug
-
+from timeit import default_timer as timer
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -23,7 +23,7 @@ def string_image(imagestring):
     arr=np.uint8(arr)
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
-load_start=time.time()
+load_start=timer()
 
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -57,12 +57,12 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
 
-load_end=time.time()
+load_end=timer()
 
 print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 
 def predict(imstr):
-    start=time.time()
+    start=timer()
     image=string_image(imstr)
     
     # Run detection
@@ -77,13 +77,13 @@ def predict(imstr):
         r['rois']=np.array([r['rois'][pos]])
         r['scores']=np.array([r['scores'][pos]])
     else:
-        end=time.time()
+        end=timer()
         print("\n[INFO] C3 time:"+str(end-start))
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
     print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
-    end=time.time()
+    end=timer()
     print("\n[INFO] C3 time:"+str(end-start))
     return imagestring
     

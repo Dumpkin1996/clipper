@@ -1,9 +1,9 @@
 import time
 from timeit import default_timer as timer
 def predict(received):
-    start=timer()
+    start=time.time()
     print("\n[INFO] Received Output:%s"%(received))
-    end=timer()
+    end=time.time()
     print("\n[INFO] C5 time:"+str(end-start))
     return "\n[INFO] Fatigue Detection finished"
     

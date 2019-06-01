@@ -85,6 +85,8 @@ def predict(imagestring):
         print("\ntest0!")
         ear = (leftEAR + rightEAR) / 2.0
         print("111")
+        end=time.time()
+        print("\n[INFO] C2 time:"+str(end-start))
         if ear<EYE_AR_THRESH:
             print("\ntest1!")
             drowsiness=True
@@ -100,8 +102,7 @@ def predict(imagestring):
             end=time.time()
             print("\n[INFO] C2 time:"+str(end-start))
         print("\n[INFO] Drowsiness Detection FINISHED!")
-        end=time.time()
-        print("\n[INFO] C2 time:"+str(end-start))
+        
         x="Ture"
         y="False"
         if COUNT>6:

@@ -23,7 +23,7 @@ def string_image(imagestring):
     arr=np.uint8(arr)
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
-load_start=timer()
+load_start=time.time()
 
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -57,7 +57,7 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
 
-load_end=timer()
+load_end=time.time()
 
 print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 

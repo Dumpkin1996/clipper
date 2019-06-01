@@ -56,6 +56,8 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
+sudoimg=cv2.imread("/container/awake.jpg")
+model.detect([sudoimg],verbose=1)
 
 load_end=time.time()
 

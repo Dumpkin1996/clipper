@@ -21,7 +21,7 @@ def string_image(imagestring):
 
 filelist=[f for f in os.listdir("/container/part1") if f.endswith(".jpg")]
 def predict(sudostring):
-    start=timer()
+    start=time.time()
     index=random.randint(0,10000)
     random_image=cv2.imread("/container/part1/"+str(filelist[index]))
     while random_image is None:
@@ -31,7 +31,7 @@ def predict(sudostring):
     print("\n[INFO] Output a Input Request!")
     inputstring=image_string(random_image)
     inputstring=str(inputstring)
-    end=timer()
+    end=time.time()
     print("\n[INFO] C0 time: "+str(end-start))
     return inputstring
 

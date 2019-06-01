@@ -64,7 +64,10 @@ print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 def predict(imstr):
     start=time.time()
     image=string_image(imstr)
-    
+    imgstr=image_string(image)
+    end=time.time()
+    print("\[INFO] C3 time: "+str(end-start))
+    return imgstr
     # Run detection
     results = model.detect([image], verbose=1)
     

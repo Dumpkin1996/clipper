@@ -89,19 +89,19 @@ def predict(imagestring):
     add=add/count
     variance=(square-add*add)/(count-1)     
     print("\n[INFO] Pose Detection FINISHED!")
+    end=time.time()
+    print("\n[INFO] C4 time:"+str(end-start))
+    if COUNT > 6:
+        return "True"
+    else:
+        return "False"
     if variance>20000:
         COUNT=COUNT+1
         print("\n[INFO] WARNING! MAY BE TIRED!")
     else:
         COUNT=COUNT-1
-    end=time.time()
-    x="True"
-    y="False"
-    print("\n[INFO] C4 time:"+str(end-start))
-    if COUNT > 6:
-        return x
-    else:
-        return y
+    
+   
     
 
 

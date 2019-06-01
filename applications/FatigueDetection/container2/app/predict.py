@@ -82,7 +82,9 @@ def predict(imagestring):
         leftEAR = eye_aspect_ratio(leftEye)
         rightEAR = eye_aspect_ratio(rightEye)
         # average the eye aspect ratio together for both eyes
+        print("\ntest0!")
         ear = (leftEAR + rightEAR) / 2.0
+        print("111")
         if ear<EYE_AR_THRESH:
             print("\ntest1!")
             drowsiness=True

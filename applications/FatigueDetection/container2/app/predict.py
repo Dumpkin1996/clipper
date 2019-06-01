@@ -12,6 +12,7 @@ import cv2
 import os
 import json
 import time
+from timeit import default_timer as timer
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -40,7 +41,7 @@ def eye_aspect_ratio(eye):
 
     # return the eye aspect ratio
     return ear
-load_start=time.time()
+load_start=timer()
 
 EYE_AR_THRESH = 0.28
 print("[INFO] loading facial landmark predictor...")
@@ -53,13 +54,13 @@ predictor = dlib.shape_predictor('/container/shape_predictor_68_face_landmarks.d
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 COUNT=0
-load_end=time.time()
+load_end=timer()
 
 print("\n[INFO] C2 LOAD:"+str(load_end-load_start))
 
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
-    start=time.time()
+    start=timer()
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
         end=time.time()
@@ -96,7 +97,7 @@ def predict(imagestring):
             COUNT=COUNT-1
     
     print("\n[INFO] Drowsiness Detection FINISHED!")
-    end=time.time()
+    end=timer()
     print("\n[INFO] C2 time:"+str(end-start))
     if COUNT>12:
         return True

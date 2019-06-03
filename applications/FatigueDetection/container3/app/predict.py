@@ -56,8 +56,6 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
-sudoimg=cv2.imread("/container/awake.jpg")
-model.detect([sudoimg],verbose=1)
 
 load_end=time.time()
 
@@ -88,20 +86,13 @@ def predict(imstr):
     print("\n[INFO] C3 time:"+str(end-start))
     return imagestring
     
-    
-#visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 
 def make_box_mask(image, xy):    
     target = image[xy[0]:xy[2], xy[1]:xy[3], :]
     img = np.zeros_like(image)
     img[xy[0]:xy[2], xy[1]:xy[3], :] = target
     return target
-#    cv2.imwrite("masked.jpg",target)
-#    plt.imshow(img)
-    
-#image = cv2.imread("simple.jpg")
-#string=image_string(image)
-#x=predict(string)
+
 
 
 

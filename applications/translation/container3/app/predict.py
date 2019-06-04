@@ -76,6 +76,25 @@ def predict(paragraph):
           return 0;
 
 
+def batch_predict(inputlist):
+    output_list = []
+    
+    # use this loop to get **i** as each inputs
+    for input in input_list:
+
+        # echoing.....
+        result = predict(input)
+        
+        # use this method to append an output to the list. 
+        # **IMPORTANT** : the order and length of output_list shoud be compatible to the input_list
+        output_list.append(result)
+
+        ## as you like, print it or not
+        print("model received input", input)
+
+
+    return output_list
+
 
       
   

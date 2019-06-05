@@ -7,6 +7,8 @@ import numpy
 import time
 from timeit import default_timer as timer
 def image_string(image):
+    if image is None:
+        return None
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
     image_string=json.dumps(imagelist)
@@ -20,14 +22,10 @@ def string_image(imagestring):
     return image
 
 filelist=[f for f in os.listdir("/container/part1") if f.endswith(".jpg")]
-def predict(sudostring):
+def predict(index):
+    index=int(index)
     start=time.time()
-    index=random.randint(0,10000)
     random_image=cv2.imread("/container/part1/"+str(filelist[index]))
-    while random_image is None:
-        index=random.randint(0,10000)
-        random_image=cv2.imread("/container/part1/"+str(filelist[index]))
-    
     print("\n[INFO] Output a Input Request!")
     inputstring=image_string(random_image)
     inputstring=str(inputstring)

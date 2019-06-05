@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 RUN apt-get update
 RUN apt-get install python3 python3-pip -y
-RUN pip3 install pandas sklearn fastai 
+RUN pip3 install pandas sklearn
 RUN pip3 install grpcio protobuf
 
 ADD prediction/c8_KNN/app /container/

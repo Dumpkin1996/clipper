@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  8 11:00:32 2019
-
-@author: davidzhou
-"""
-
 import time
 import pandas as pd
 from sklearn import neighbors

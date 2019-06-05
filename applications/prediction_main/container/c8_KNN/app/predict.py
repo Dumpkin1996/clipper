@@ -36,7 +36,7 @@ def predict(comstring):
         #create features
         #add_datepart(new_data, 'Date')
 
-        new_data.drop('Elapsed', axis=1, inplace=True)  #elapsed will be the time stamp
+        # new_data.drop('Elapsed', axis=1, inplace=True)  #elapsed will be the time stamp
         
         #split into train and validation
         train = new_data[:-10]

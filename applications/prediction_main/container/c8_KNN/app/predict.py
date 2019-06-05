@@ -11,7 +11,7 @@ import pandas as pd
 from sklearn import neighbors
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import MinMaxScaler
-from fastai.tabular import add_datepart
+#from fastai.tabular import add_datepart
 
 scaler = MinMaxScaler(feature_range=(0, 1))
 
@@ -32,7 +32,7 @@ def predict(comstring):
          new_data['Close'][i] = data['Close'][i]
 
     #create features
-    add_datepart(new_data, 'Date')
+    #add_datepart(new_data, 'Date')
 
     new_data.drop('Elapsed', axis=1, inplace=True)  #elapsed will be the time stamp
     

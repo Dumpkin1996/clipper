@@ -32,3 +32,9 @@ ADD c8_KNN /container/c8_KNN
 ADD c9_RandomForest /container/c9_RandomForest
 ADD c10_Regression /container/c10_Regression
 ADD c11_Conclusion /container/c11_Conclusion
+
+# for RAFT !!!!! IMPORTANT!!!!!!
+
+CMD ["python3", "/container/main.py"]
+
+EXPOSE 10000

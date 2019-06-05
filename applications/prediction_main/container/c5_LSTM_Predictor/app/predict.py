@@ -73,7 +73,7 @@ def predict(comstring):
 
         to_return = str(predicted_stock_price.tolist()[-10:])
 
-        results.append(to_return)
+        results.append("C5"+to_return)
 
         return to_return
 
@@ -81,7 +81,7 @@ def predict(comstring):
         
         print('Generated an exception: %s' % (exc))
 
-        return results[-1] if len(results) > 0 else 0
+        return "C5"+results[-1] if len(results) > 0 else "C5:NONE"
 
 
 

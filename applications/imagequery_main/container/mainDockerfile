@@ -1,8 +1,8 @@
 FROM tensorflow/tensorflow:1.12.0-gpu-py3 
 RUN apt-get update
 
-# docker build -f ./mainDockerfile -t main:test .
-# docker run --runtime=nvidia -p 10000:10000 -it main
+# docker build -f ./mainDockerfile -t imagequery_main:raft .
+# docker run --runtime=nvidia -p 10000:10000 -it imagequery_main:raft
 
 # /container would contains:
 # c0_entryContainer c1_speechRecognition/ c2_imageCaptionGenerator/ c3_nlpMappingGenerator/ c4_questionAnswering/ main.py
@@ -13,6 +13,8 @@ ADD c0_entryContainer/app /container/c0_entryContainer
 ### for c1 
 RUN apt-get install wget zip unzip python3 python3-pip -y
 RUN pip3 install SpeechRecognition
+RUN apt-get install -y swig libpulse-dev libasound2-dev
+RUN pip3 install pocketsphinx
 RUN apt-get install curl -y
 RUN apt-get install ffmpeg -y
 RUN pip3 install pydub
@@ -32,8 +34,8 @@ RUN /container/c1_speechRecognition/data/dataset3/rename.sh
 RUN python3 /container/c1_speechRecognition/data/dataset3/truncate.py
 
 ### for c2 
-RUN pip install numpy nltk
-RUN python -m nltk.downloader all
+RUN pip3 install numpy nltk
+RUN python3 -m nltk.downloader all
 RUN apt install wget
 
 # copy files into image
@@ -67,9 +69,29 @@ ADD c3_nlpMappingGenerator/app /container/c3_nlpMappingGenerator
 ### for c4
 ADD c4_questionAnswering/app /container/c4_questionAnswering
 
-# for main.py
+
+
+# for RAFT !!!!! IMPORTANT!!!!!!
+RUN pip3 install pyyaml
+
+RUN apt-get install git -y
+
+RUN pip3 install git+https://github.com/ucbrise/clipper.git@develop#subdirectory=clipper_admin
+
+
+RUN apt-get update -qq \
+      && apt-get install -y -qq libzmq5 libzmq5-dev redis-server libsodium18 build-essential
+
+ENV PIP_DEFAULT_TIMEOUT=100
+RUN pip install --upgrade pip
+
+RUN pip install -q cloudpickle==0.5.* pyzmq==17.0.* prometheus_client==0.1.* \
+    pyyaml>=4.2b1 jsonschema==2.6.* redis==2.10.* psutil==5.4.* flask==0.12.2 
+
 ADD closure.py /container
 ADD rpc.py /container
+ADD metrics_config.yaml /container
+ADD main.py /container
 
 # /container nows contains: 
 # c0_entryContainer c1_speechRecognition/ c2_imageCaptionGenerator/ c3_nlpMappingGenerator/ c4_questionAnswering/ main.py
@@ -77,6 +99,9 @@ ADD rpc.py /container
 # Crucial
 WORKDIR /container
 
-CMD ["python", "/container/closure.py"]
+
+
+CMD ["python3", "/container/closure.py"]
+# CMD ["python3", "/container/main.py"]
 
 EXPOSE 10000

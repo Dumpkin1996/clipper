@@ -35,6 +35,8 @@ ADD c11_Conclusion /container/c11_Conclusion
 
 # for RAFT !!!!! IMPORTANT!!!!!!
 
+ADD main.py /container
+
 CMD ["python3", "/container/main.py"]
 
 EXPOSE 10000

@@ -103,7 +103,7 @@ def predict(info):
 		print ("cost", cost)
 
 		end = time.time()			
-		print("ELASPSED TIME", end - start)
+		print("ELASPSED TIME", (end-start)*1000)
 
 		return str(result) + "***" + info
 

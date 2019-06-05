@@ -41,7 +41,7 @@ def predict(info):
 		with graph.as_default():
 			steering_angle = keras_predict(model, gray)
 		end = time.time()
-		print("ELASPSED TIME", end - start)
+		print("ELASPSED TIME", (end-start)*1000)
 		return str(steering_angle) + "***" + info
 	except Exception as exc:
 		print('Generated an exception: %s' % (exc))

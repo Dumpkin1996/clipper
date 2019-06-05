@@ -50,7 +50,7 @@ def predict(comstring):
         preds = model.predict(X_test).tolist()
         
         end = time.time()
-        print("ELASPSED TIME", end - start)
+        print("ELASPSED TIME", (end-start)*1000)
         
         return "C9"+str(preds)
     except Exception as exc:

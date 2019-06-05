@@ -24,7 +24,7 @@ def predict(info):
 		gray = cv2.resize((cv2.cvtColor(image, cv2.COLOR_RGB2HSV))[:, :, 1], (40, 40))
 		print("resized shape", gray.shape)
 		end = time.time()
-		print("ELASPSED TIME", end - start)
+		print("ELASPSED TIME", (end-start)*1000)
 		return info
 	except Exception as exc:
 		print('Generated an exception: %s' % (exc))

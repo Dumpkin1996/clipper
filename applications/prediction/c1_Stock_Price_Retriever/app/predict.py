@@ -22,7 +22,7 @@ def predict(requestInfo): # serves as an api function
 		start = time.time()
 		to_return = retrieveStockPrice(requestInfo)
 		end = time.time()
-		print("ELASPSED TIME", end - start)
+		print("ELASPSED TIME", (end-start)*1000)
 		return to_return
 	except Exception as exc:
 		print('Generated an exception: %s' % (exc))

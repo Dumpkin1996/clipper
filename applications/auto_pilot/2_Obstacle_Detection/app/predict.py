@@ -195,14 +195,14 @@ def predict(info):
 			previous.append(obstacle_detected)
 			
 			end = time.time()
-			print("ELASPSED TIME", end - start)
+			print("ELASPSED TIME", (end-start)*1000)
 
 			return str(to_return) + "***" + info
 
 		else:
 
 			end = time.time()			
-			print("ELASPSED TIME", end - start)
+			print("ELASPSED TIME", (end-start)*1000)
 			
 			return str(previous[-1]) + "***" + info
 

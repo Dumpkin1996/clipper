@@ -28,7 +28,7 @@ def predict(comstr):
         model_fit = model.fit(disp=0)
         result = model_fit.forecast(steps=1)
         end = time.time()
-        print("ELASPSED TIME", end - start)
+        print("ELASPSED TIME", (end-start)*1000)
         return "C7"+str(result)
     #    forecast = pd.DataFrame(forecast,index = valid.index,columns=['Prediction'])
     except Exception as exc:

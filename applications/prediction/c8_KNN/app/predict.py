@@ -54,7 +54,7 @@ def predict(comstring):
         preds = [x for x in model.predict(x_valid).tolist()]
 
         end = time.time()
-        print("c8 ELASPSED TIME", end - start)
+        print("ELASPSED TIME", end - start)
 
         return str(preds)
     except Exception as exc:

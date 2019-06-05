@@ -27,7 +27,7 @@ def predict(sent_list):
 
         end = time.time()
         
-        print("ELASPSED TIME", end - start)
+        print("ELASPSED TIME", (end-start)*1000)
 
         return result_list
     except Exception as exc:

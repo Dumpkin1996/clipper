@@ -69,7 +69,7 @@ def predict(comstring):
 
         end = time.time()
         
-        print("c5 ELASPSED TIME", end - start)
+        print("ELASPSED TIME", (end-start)*1000)
 
         to_return = str(predicted_stock_price.tolist()[-10:])
 

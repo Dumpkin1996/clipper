@@ -12,7 +12,7 @@ def predict(request): # serve as api function
 		with open(data_path, 'r', encoding='utf-8') as file:
 			result = file.read().replace('\n', '')
 		end = time.time()
-		print("ELASPSED TIME", end - start)
+		print("ELASPSED TIME", (end-start)*1000)
 		print(result)
 		return result
 	except Exception as exc:

@@ -27,7 +27,7 @@ def read_image(i):
 
 global graph, model
 
-#graph = tf.get_default_graph()
+graph = tf.get_default_graph()
 
 model = load_model('/container/Autopilot.h5')
 

@@ -25,11 +25,11 @@ def read_image(i):
 	print("original shape", image.shape)
 	return image
 
-global graph, model
+# global graph, model
 
-graph = tf.get_default_graph()
+# graph = tf.get_default_graph()
 
-# model = load_model('/container/models/Autopilot.h5')
+model = load_model('/container/models/Autopilot.h5')
 
 def predict(info):
 	start = time.time()
@@ -38,8 +38,7 @@ def predict(info):
 	gray = cv2.resize((cv2.cvtColor(image, cv2.COLOR_RGB2HSV))[:, :, 1], (40, 40))
 	print("resized shape", gray.shape)
 	model = load_model('/container/models/Autopilot.h5')
-	with graph.as_default():
-		steering_angle = keras_predict(model, gray)
+	steering_angle = keras_predict(model, gray)
 	end = time.time()
 	print("ELASPSED TIME", end - start)
 	return str(steering_angle) + "***" + info

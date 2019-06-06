@@ -24,7 +24,7 @@ def string_image(imagestring):
 filelist=[f for f in os.listdir("/container/part1") if f.endswith(".jpg")]
 def predict(index):
     t1 = datetime.utcnow()
-    print("\n[INFO]\t", "[c1]\t", str(t1))
+    print("\n[INFO]\t", "[c0]\t", str(t1))
     
     index=int(index)
     random_image=cv2.imread("/container/part1/"+str(filelist[index]))
@@ -33,8 +33,8 @@ def predict(index):
     inputstring=str(inputstring)
     
     t2 = datetime.utcnow()
-    print("[INFO]\t", "[c1]\t", str(t2))
-    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+    print("[INFO]\t", "[c0]\t", str(t2))
+    print("[INFO]\t", "[c0]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
 
     return inputstring
 

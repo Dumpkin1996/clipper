@@ -80,8 +80,8 @@ def predict(comstring):
     except Exception as exc:
         
         print('Generated an exception: %s' % (exc))
-
-        return results[-1] if len(results) > 0 else 0
+        
+        return "C5"+results[-1] if len(results) > 0 else "C5:NONE"
 
 
 

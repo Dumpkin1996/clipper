@@ -66,6 +66,56 @@ def run_regression(stock_data):
     print("")
     return result_rg
 
+
+def data(s):
+
+    # CONTAINER 1: stock price retriever
+    stock_data = pd.read_json(c1.predict(s + ":2018:1:1"))
+    print("\nStart Predicting: ", s)
+    print("\nStock price data Retrieval FINISHED")
+    print("The retrieved data is in shape of ", stock_data.shape)
+    #print("Here are the first 5 lines of retrieved data:")
+    #print(stock_data.head())
+    print("")
+
+    returned_result_list = []
+    p = Pool(5)
+    returned_result_list.append(p.apply_async(run_lstm, args=(stock_data,))) 
+    returned_result_list.append(p.apply_async(run_knn, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_random_forest, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_regression, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
+    p.close()
+    p.join()
+
+    return returned_result_list
+
+def twitter(s):
+    # CONTAINER 2: Twitter Collector
+    tweet_number = 1000
+    twitter_data = c2.predict(s)
+    print("Twitter data Retrieval FINISHED")
+    print("Successfully retrieved", tweet_number, "number of tweets.")
+    #print("Here are the first 200 characters:")
+    #print(twitter_data[:200])
+    print("")
+
+    # CONTAINER 3: Tokenizer
+    tokenized_twitter_data = c3.predict(twitter_data)
+    print("Tokenization FINISHED")
+    print("Generated a list containing ", len(tokenized_twitter_data), " sentences")
+    #print("The first 200 characters are :\n", tokenized_twitter_data[:200])
+    print("")
+
+    # CONTAINER 4: sentimental Analysis
+    polarity_list = c4.predict(tokenized_twitter_data)
+    print("Twitter data Sentiment Analysis FINISHED")
+    print("Generated a list containing ", len(polarity_list), " results")
+    #print("The first 200 characters are :\n", polarity_list[:200])
+    print("")
+    return polarity_list
+
+
 def run():
 
     start = time.time()
@@ -76,47 +126,11 @@ def run():
 
     for s in l98:
         
-        # CONTAINER 1: stock price retriever
-        stock_data = pd.read_json(c1.predict(s + ":2018:1:1"))
-        print("\nStart Predicting: ", s)
-        print("\nStock price data Retrieval FINISHED")
-        print("The retrieved data is in shape of ", stock_data.shape)
-        #print("Here are the first 5 lines of retrieved data:")
-        #print(stock_data.head())
-        print("")
-
-        returned_result_list = []
-        p = Pool(5)
-        returned_result_list.append(p.apply_async(run_lstm, args=(stock_data,))) 
-        returned_result_list.append(p.apply_async(run_knn, args=(stock_data,)))
-        returned_result_list.append(p.apply_async(run_random_forest, args=(stock_data,)))
-        returned_result_list.append(p.apply_async(run_regression, args=(stock_data,)))
-        returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
+        p = Pool(2)
+        returned_result_list =  p.apply_async(data, args=(s,))
+        polarity_list = p.apply_async(twitter, args=(s,))
         p.close()
         p.join() # p.join()方法会等待所有子进程执行完毕
-
-        # CONTAINER 2: Twitter Collector
-        tweet_number = 1000
-        twitter_data = c2.predict(s)
-        print("Twitter data Retrieval FINISHED")
-        print("Successfully retrieved", tweet_number, "number of tweets.")
-        #print("Here are the first 200 characters:")
-        #print(twitter_data[:200])
-        print("")
-
-        # CONTAINER 3: Tokenizer
-        tokenized_twitter_data = c3.predict(twitter_data)
-        print("Tokenization FINISHED")
-        print("Generated a list containing ", len(tokenized_twitter_data), " sentences")
-        #print("The first 200 characters are :\n", tokenized_twitter_data[:200])
-        print("")
-
-        # CONTAINER 4: sentimental Analysis
-        polarity_list = c4.predict(tokenized_twitter_data)
-        print("Twitter data Sentiment Analysis FINISHED")
-        print("Generated a list containing ", len(polarity_list), " results")
-        #print("The first 200 characters are :\n", polarity_list[:200])
-        print("")
 
         # CONTAINER 11: Weighting Algorithm
         final_prediction = c11.predict(str(returned_result_list))

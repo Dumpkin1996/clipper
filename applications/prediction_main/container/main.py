@@ -87,6 +87,7 @@ def data(s):
     returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
     p.close()
     p.join()
+    print(returned_result_list)
     return returned_result_list
 
 def twitter(s):
@@ -133,7 +134,6 @@ def run():
 
         # CONTAINER 11: Weighting Algorithm
         final_prediction = c11.predict(str(returned_result_list))
-        print(returned_result_list)
         print("\n\nEntire Process FINISHED")
         print("Total Time:", time.time()-start)
 

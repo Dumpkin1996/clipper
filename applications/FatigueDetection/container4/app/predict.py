@@ -33,11 +33,12 @@ COUNT=0
 
 def predict(imagestring):
     t1 = datetime.utcnow()
-    print("\n[INFO]\t", "[c1]\t", str(t1))
+    print("\n[INFO]\t", "[c4]\t", str(t1))
     
     if imagestring is None:
-        end=timer()
-        print("\n[INFO] c4 time: "+str(end-start))
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c4]\t", str(t2))
+        print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
         print("\n[INFO] Pose Detection FINISHED!")
         return False
     frame=string_image(imagestring)
@@ -89,8 +90,8 @@ def predict(imagestring):
     print("\n[INFO] Pose Detection FINISHED!")
     
     t2 = datetime.utcnow()
-    print("[INFO]\t", "[c1]\t", str(t2))
-    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+    print("[INFO]\t", "[c4]\t", str(t2))
+    print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
     
     if COUNT > 6:
         return "True"

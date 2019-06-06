@@ -19,7 +19,7 @@ except Exception as exc:
 
 print("Modules successfully imported!")
 		
-def run(index):
+def run():
     try:
         start = time.time()
         for i in range(100):

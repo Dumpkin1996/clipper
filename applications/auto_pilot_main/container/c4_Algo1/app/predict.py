@@ -38,7 +38,7 @@ def predict(info):
 	gray = cv2.resize((cv2.cvtColor(image, cv2.COLOR_RGB2HSV))[:, :, 1], (40, 40))
 	print("resized shape", gray.shape)
 	# model = load_model('/container/models/Autopilot.h5')
-	ith graph.as_default():
+	with graph.as_default():
 		steering_angle = keras_predict(model, gray)
 	end = time.time()
 	print("ELASPSED TIME", end - start)

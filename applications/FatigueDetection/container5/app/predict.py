@@ -1,10 +1,15 @@
 import time
-from timeit import default_timer as timer
+from datetime import datetime
 def predict(received):
-    start=time.time()
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c5]\t", str(t1))
+    
     print("\n[INFO] Received Output:%s"%(received))
-    end=time.time()
-    print("\n[INFO] C5 time:"+str(end-start))
+    
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c5]\t", str(t2))
+    print("[INFO]\t", "[c5]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+    
     return "\n[INFO] Fatigue Detection finished"
     
 # def predict(price_pred_list, trend_pred, polarity_list):

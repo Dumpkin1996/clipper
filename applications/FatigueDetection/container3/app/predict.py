@@ -10,7 +10,7 @@ from samples.coco import coco
 import mrcnn.model as modellib
 import tensorflow as tf
 #import imgaug
-from timeit import default_timer as timer
+from datetime import datetime
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -23,7 +23,6 @@ def string_image(imagestring):
     arr=np.uint8(arr)
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
-load_start=time.time()
 
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'bus', 'train', 'truck', 'boat', 'traffic light',
@@ -57,12 +56,11 @@ model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 # Load weights trained on MS-COCO
 model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
 
-load_end=time.time()
-
-print("\n[INFO] C3 LOAD:"+str(load_end-load_start))
 
 def predict(imstr):
-    start=time.time()
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c1]\t", str(t1))
+    
     image=string_image(imstr)
     # Run detection
     results = model.detect([image], verbose=1)
@@ -76,14 +74,18 @@ def predict(imstr):
         r['rois']=np.array([r['rois'][pos]])
         r['scores']=np.array([r['scores'][pos]])
     else:
-        end=time.time()
-        print("\n[INFO] C3 time:"+str(end-start))
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c1]\t", str(t2))
+        print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
     print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
-    end=time.time()
-    print("\n[INFO] C3 time:"+str(end-start))
+    
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c1]\t", str(t2))
+    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
+    
     return imagestring
     
 

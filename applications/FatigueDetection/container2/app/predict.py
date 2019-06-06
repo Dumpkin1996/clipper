@@ -57,14 +57,14 @@ COUNT=0
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
     t1 = datetime.utcnow()
-    print("\n[INFO]\t", "[c1]\t", str(t1))
+    print("\n[INFO]\t", "[c2]\t", str(t1))
     
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
         
         t2 = datetime.utcnow()
-        print("[INFO]\t", "[c1]\t", str(t2))
-        print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+        print("[INFO]\t", "[c2]\t", str(t2))
+        print("[INFO]\t", "[c2]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
         
         return False
     frame=string_image(imagestring)
@@ -87,17 +87,18 @@ def predict(imagestring):
         if ear<EYE_AR_THRESH:
             drowsiness=True
             t2 = datetime.utcnow()
-            print("[INFO]\t", "[c1]\t", str(t2))
-            print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+            print("[INFO]\t", "[c2]\t", str(t2))
+            print("[INFO]\t", "[c2]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
             COUNT=COUNT+1
-            return str(COUNT)
+           
         else:
             drowsiness=False
             t2 = datetime.utcnow()
-            print("[INFO]\t", "[c1]\t", str(t2))
-            print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+            print("[INFO]\t", "[c2]\t", str(t2))
+            print("[INFO]\t", "[c2]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
             COUNT=COUNT-1
-            return str(COUNT)
+    return "drowiness detection finished"
+            
             
 
 #         cv2.destroyAllWindows()

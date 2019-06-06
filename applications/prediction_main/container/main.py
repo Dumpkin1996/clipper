@@ -80,11 +80,11 @@ def data(s):
 
     returned_result_list = []
     p = Pool(5)
-    returned_result_list.append(p.apply_async(run_lstm, args=(stock_data,))) 
-    returned_result_list.append(p.apply_async(run_knn, args=(stock_data,)))
-    returned_result_list.append(p.apply_async(run_random_forest, args=(stock_data,)))
-    returned_result_list.append(p.apply_async(run_regression, args=(stock_data,)))
-    returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
+    p.apply_async(run_lstm, args=(stock_data,))
+    p.apply_async(run_knn, args=(stock_data,))
+    p.apply_async(run_random_forest, args=(stock_data,))
+    p.apply_async(run_regression, args=(stock_data,))
+    p.apply_async(run_arima, args=(stock_data,))
     p.close()
     p.join()
 

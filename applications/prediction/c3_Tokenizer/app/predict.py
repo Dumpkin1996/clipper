@@ -1,6 +1,8 @@
 import spacy,en_core_web_sm
 import time
 
+nlp = en_core_web_sm.load()
+
 def predict(text_data):
 	try:
 		start = time.time()

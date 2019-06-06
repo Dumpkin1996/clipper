@@ -37,7 +37,8 @@ def predict(comstring):
 
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         # print(X_test.shape) # 500 x 60 x 1
-        predicted_stock_price = new_model.predict(X_test)
+        with graph.as_default():
+            predicted_stock_price = new_model.predict(X_test)
         # print(predicted_stock_price.shape) # 500 x 1
         predicted_stock_price = predicted_stock_price.ravel()
 

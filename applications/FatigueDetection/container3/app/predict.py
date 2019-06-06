@@ -76,7 +76,7 @@ def predict(imstr):
     else:
         t2 = datetime.utcnow()
         print("[INFO]\t", "[c3]\t", str(t2))
-        print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
+        print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
@@ -84,7 +84,7 @@ def predict(imstr):
     
     t2 = datetime.utcnow()
     print("[INFO]\t", "[c3]\t", str(t2))
-    print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
+    print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
     
     return imagestring
     

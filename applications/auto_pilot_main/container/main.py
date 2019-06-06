@@ -23,7 +23,7 @@ def run():
     try:
         start = time.time()
         for i in range(100):
-            c0_output = entry.predict(str(index) + "***7***7")
+            c0_output = entry.predict(str(i) + "***7***7")
             print(c0_output)
             c1_output = preprocessing.predict(c0_output)
             print("Image Preprocessing Finished")

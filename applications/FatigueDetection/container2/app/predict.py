@@ -12,7 +12,7 @@ import cv2
 import os
 import json
 import time
-from timeit import default_timer as timer
+from datetime import datetime
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -41,7 +41,6 @@ def eye_aspect_ratio(eye):
 
     # return the eye aspect ratio
     return ear
-load_start=time.time()
 
 EYE_AR_THRESH = 0.28
 print("[INFO] loading facial landmark predictor...")
@@ -54,20 +53,21 @@ predictor = dlib.shape_predictor('/container/shape_predictor_68_face_landmarks.d
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 COUNT=0
-load_end=time.time()
-
-print("\n[INFO] C2 LOAD:"+str(load_end-load_start))
 
 # imagestring is a serialized .jpg encoded image string
 def predict(imagestring):      
-    start=time.time()
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c1]\t", str(t1))
+    
     if imagestring is None:
         print("\n[INFO] Drowsiness Detection FINISHED!")
-        end=time.time()
-        print("\n[INFO] C2 time:"+str(end-start))
+        
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c1]\t", str(t2))
+        print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+        
         return False
     frame=string_image(imagestring)
-#    frame = cv2.imread("5.jpeg")
     frame = imutils.resize(frame, width=450)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -86,17 +86,19 @@ def predict(imagestring):
         
         if ear<EYE_AR_THRESH:
             drowsiness=True
-            end=time.time()
-            print("\n[INFO] C2 time:"+str(end-start))
+            t2 = datetime.utcnow()
+            print("[INFO]\t", "[c1]\t", str(t2))
+            print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
             COUNT=COUNT+1
+            return str(COUNT)
         else:
             drowsiness=False
-            end=time.time()
-            print("\n[INFO] C2 time:"+str(end-start))
+            t2 = datetime.utcnow()
+            print("[INFO]\t", "[c1]\t", str(t2))
+            print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
             COUNT=COUNT-1
-    return None
-      
-
+            return str(COUNT)
+            
 
 #         cv2.destroyAllWindows()
 

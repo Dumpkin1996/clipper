@@ -3,7 +3,7 @@ import numpy as np
 import os
 import json
 import time
-from timeit import default_timer as timer
+from datetime import datetime
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -17,7 +17,6 @@ def string_image(imagestring):
     image=cv2.imdecode(arr,cv2.IMREAD_COLOR)
     return image
 
-load_start=time.time()
 
 protoFile = "/container/pose_deploy_linevec.prototxt"
 weightsFile = "/container/pose_iter_440000.caffemodel"
@@ -31,12 +30,11 @@ inHeight = 368
 
 COUNT=0
 
-load_end=time.time()
-
-print("\n[INFO] C4 LOAD:"+str(load_end-load_start))
 
 def predict(imagestring):
-    start=time.time()
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c1]\t", str(t1))
+    
     if imagestring is None:
         end=timer()
         print("\n[INFO] c4 time: "+str(end-start))
@@ -89,8 +87,11 @@ def predict(imagestring):
     add=add/count
     variance=(square-add*add)/(count-1)     
     print("\n[INFO] Pose Detection FINISHED!")
-    end=time.time()
-    print("\n[INFO] C4 time:"+str(end-start))
+    
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c1]\t", str(t2))
+    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+    
     if COUNT > 6:
         return "True"
     else:

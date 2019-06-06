@@ -29,7 +29,7 @@ def read_image(i):
 
 # graph = tf.get_default_graph()
 
-model = load_model('/container/models/Autopilot.h5')
+#model = load_model('/container/models/Autopilot.h5')
 
 def predict(info):
 	start = time.time()

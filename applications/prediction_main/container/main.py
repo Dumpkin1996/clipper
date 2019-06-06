@@ -80,20 +80,19 @@ def data(s):
 
     returned_result_list = []
     p = Pool(5)
-    p.apply_async(run_lstm, args=(stock_data,))
-    p.apply_async(run_knn, args=(stock_data,))
-    p.apply_async(run_random_forest, args=(stock_data,))
-    p.apply_async(run_regression, args=(stock_data,))
-    p.apply_async(run_arima, args=(stock_data,))
+    returned_result_list.append(p.apply_async(run_lstm, args=(stock_data,))) 
+    returned_result_list.append(p.apply_async(run_knn, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_random_forest, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_regression, args=(stock_data,)))
+    returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
     p.close()
     p.join()
-
     return returned_result_list
 
 def twitter(s):
     # CONTAINER 2: Twitter Collector
     tweet_number = 1000
-    twitter_data = c2.predict(s)
+    twitter_data = c2.predict(s + ":2018:1:1")
     print("Twitter data Retrieval FINISHED")
     print("Successfully retrieved", tweet_number, "number of tweets.")
     #print("Here are the first 200 characters:")
@@ -127,13 +126,14 @@ def run():
     for s in l98:
         
         p = Pool(2)
-        returned_result_list =  p.apply_async(data, args=(s,))
+        returned_result_list = p.apply_async(data, args=(s,))
         polarity_list = p.apply_async(twitter, args=(s,))
         p.close()
         p.join() # p.join()方法会等待所有子进程执行完毕
 
         # CONTAINER 11: Weighting Algorithm
         final_prediction = c11.predict(str(returned_result_list))
+        print(returned_result_list)
         print("\n\nEntire Process FINISHED")
         print("Total Time:", time.time()-start)
 

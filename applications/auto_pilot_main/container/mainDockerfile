@@ -22,6 +22,7 @@ ADD c4_Algo1 /container/c4_Algo1
 ADD c5_Algo2 /container/c5_Algo2
 ADD c6_Conclusion /container/c6_Conclusion
 ADD dataset /container/dataset
+ADD models /container/models
 ADD main.py /container
 
 CMD ["python3", "/container/main.py"]

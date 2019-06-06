@@ -59,7 +59,7 @@ model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
 
 def predict(imstr):
     t1 = datetime.utcnow()
-    print("\n[INFO]\t", "[c1]\t", str(t1))
+    print("\n[INFO]\t", "[c3]\t", str(t1))
     
     image=string_image(imstr)
     # Run detection
@@ -75,16 +75,16 @@ def predict(imstr):
         r['scores']=np.array([r['scores'][pos]])
     else:
         t2 = datetime.utcnow()
-        print("[INFO]\t", "[c1]\t", str(t2))
-        print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
+        print("[INFO]\t", "[c3]\t", str(t2))
+        print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
     print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
     
     t2 = datetime.utcnow()
-    print("[INFO]\t", "[c1]\t", str(t2))
-    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
+    print("[INFO]\t", "[c3]\t", str(t2))
+    print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." 
     
     return imagestring
     

@@ -5,7 +5,7 @@ import json
 import random
 import numpy
 import time
-from timeit import default_timer as timer
+from datetime import datetime
 def image_string(image):
     if image is None:
         return None
@@ -23,14 +23,19 @@ def string_image(imagestring):
 
 filelist=[f for f in os.listdir("/container/part1") if f.endswith(".jpg")]
 def predict(index):
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c1]\t", str(t1))
+    
     index=int(index)
-    start=time.time()
     random_image=cv2.imread("/container/part1/"+str(filelist[index]))
     print("\n[INFO] Output a Input Request!")
     inputstring=image_string(random_image)
     inputstring=str(inputstring)
-    end=time.time()
-    print("\n[INFO] C0 time: "+str(end-start))
+    
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c1]\t", str(t2))
+    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+
     return inputstring
 
 

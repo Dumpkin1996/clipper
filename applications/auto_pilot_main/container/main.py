@@ -31,8 +31,8 @@ def run(index):
         c3_output = route_planning.predict(c2_output)
         print("Route Planning Finished")
         returned_result_list = []
-        returned_result_list.append(algo1.predict(c3_output))
-        returned_result_list.append(algo2.predict(c3_output))
+        # returned_result_list.append(algo1.predict(c3_output))
+        # returned_result_list.append(algo2.predict(c3_output))
         print("Angle Prediction Finished")
         print(returned_result_list)
         print("Total Time:", time.time()-start)

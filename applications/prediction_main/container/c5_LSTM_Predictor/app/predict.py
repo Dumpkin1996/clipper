@@ -9,6 +9,8 @@ global graph, new_model
 
 graph = tf.get_default_graph()
 
+new_model = load_model("/container/c5_LSTM_Predictor/app/model.h5")
+
 results = []
 
 def predict(comstring):
@@ -35,7 +37,6 @@ def predict(comstring):
 
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         # print(X_test.shape) # 500 x 60 x 1
-        new_model = load_model("/container/c5_LSTM_Predictor/app/model.h5")
         with graph.as_default():
             predicted_stock_price = new_model.predict(X_test)
         # print(predicted_stock_price.shape) # 500 x 1

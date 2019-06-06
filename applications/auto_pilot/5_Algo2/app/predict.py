@@ -1,4 +1,4 @@
-import numpy as np
+simport numpy as np
 import cv2
 import time
 import tensorflow as tf

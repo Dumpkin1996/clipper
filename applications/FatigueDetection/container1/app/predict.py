@@ -4,16 +4,11 @@ import cv2
 import numpy as np
 import json
 import time 
-from timeit import default_timer as timer
-loads=time.time()
+from datetime import datetime
 # Read the model
 model = cv2.dnn.readNetFromCaffe('/container/deploy.prototxt','/container/weights.caffemodel')
 
 #imagestring is a serialized .jpg encoded image string
-
-loade=time.time()
-
-print("\n[INFO] C1 LOAD:"+str(loade-loads))
 
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
@@ -30,7 +25,9 @@ def string_image(imagestring):
 
 
 def predict(imagestring):
-    start=time.time()
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c1]\t", str(t1))
+    
     image=string_image(imagestring)
 #    image=cv2.imread('simple.jpg')  
     count = 0
@@ -48,20 +45,15 @@ def predict(imagestring):
             count += 1
             frame = image[startY:endY, startX:endX]
             image_str=image_string(frame)
-            end=time.time()
-            print("\n[INFO] C1 time:"+str(end-start))
+            
+            t2 = datetime.utcnow()
+            print("[INFO]\t", "[c1]\t", str(t2))
+            print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
             return image_str
-    end=time.time()
-    print("\n[INFO] C1 time:"+str(end-start))
+        
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c1]\t", str(t2))
+    print("[INFO]\t", "[c1]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
     return None
-    
-    
-    
-
-#image=cv2.imread('sleep.jpg')
-#image_encode=cv2.imencode('.jpg',image)[1]
-#image_array=np.array(image_encode)
-#image_string=image_array.tostring()
-#predict(image_string)
 
 

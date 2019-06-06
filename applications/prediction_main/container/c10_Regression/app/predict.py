@@ -11,6 +11,8 @@ import pandas as pd
 import time
 	
 def predict(compstring):
+
+	print("RUNNING C10")
 	start = time.time()
 	df = pd.read_json(compstring)
 	#print the head

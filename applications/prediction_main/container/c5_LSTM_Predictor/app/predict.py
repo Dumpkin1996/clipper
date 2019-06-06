@@ -17,6 +17,7 @@ def predict(comstring):
 
     try:
 
+        print("RUNNING C5")
         start = time.time()
 
         input_data = pd.read_json(comstring)

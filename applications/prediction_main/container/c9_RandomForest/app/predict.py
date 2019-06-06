@@ -13,6 +13,8 @@ from sklearn.ensemble import RandomForestClassifier
     
 def predict(comstring):
 
+    print("RUNNING C9")
+
     start = time.time()
 
     data = pd.read_json(comstring)

@@ -14,6 +14,7 @@ import time
 scaler = MinMaxScaler(feature_range=(0, 1))
 
 def predict(comstr):
+    print("RUNNING C7")
     start = time.time()
     df = pd.read_json(comstr)
     #setting index as date

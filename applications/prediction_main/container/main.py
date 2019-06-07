@@ -125,17 +125,24 @@ def run():
     l100 = ['HAS', 'IRM', 'TEL', 'EL', 'ESS', 'COP', 'KEY', 'FE', 'CBS', 'IFF', 'NOV', 'IRM', 'FL', 'BBY', 'MS', 'FAST', 'CRM', 'NUE', 'MSCI', 'MMC', 'AIG', 'WELL', 'STT', 'CMA', 'RMD', 'FB', 'FB', 'IFF', 'WU', 'USB', 'NI', 'EA', 'TRIP', 'HAL', 'EBAY', 'AON', 'MS', 'TXN', 'USB', 'IRM', 'CE', 'BK', 'ROL', 'ANTM', 'NVDA', 'SEE', 'CNC', 'DXC', 'APA', 'APA', 'UPS', 'DOW', 'CAT', 'MET', 'HIG', 'LOW', 'CAT', 'VZ', 'MSCI', 'MA', 'BEN', 'RMD', 'BEN', 'HPE', 'PGR', 'CNC', 'PH', 'PGR', 'MAC', 'NOV', 'BEN', 'ICE', 'TAP', 'ABC', 'MMC', 'ESS', 'COST', 'HD', 'CVS', 'KIM', 'CAG', 'CNC', 'UPS', 'MO', 'BEN', 'FL', 'GS', 'EL', 'CMA', 'FE', 'IP', 'KIM', 'LOW', 'CF', 'NUE', 'FL', 'USB', 'CBS', 'RF', 'CMA']
 
 
+    # for s in l98:
+    #     with futures.ThreadPoolExecutor(max_workers=2) as executor:
+    #         inputt_list = l98
+    #         future_to_excute = [executor.submit(data, s), executor.submit(twitter, s)]
+    #         for future in futures.as_completed(future_to_excute):
+    #             try:
+    #                 data = future.result()
+    #             except Exception as exc:
+    #                 print('%s generated an exception: %s' % (str(inputt), exc))
+    #             else:
+    #                 print('Request %s received output:\n%s' % (str(inputt), data))
+
     for s in l98:
-        with futures.ThreadPoolExecutor(max_workers=2) as executor:
-            inputt_list = l98
-            future_to_excute = [executor.submit(data, s), executor.submit(twitter, s)]
-            for future in futures.as_completed(future_to_excute):
-                try:
-                    data = future.result()
-                except Exception as exc:
-                    print('%s generated an exception: %s' % (str(inputt), exc))
-                else:
-                    print('Request %s received output:\n%s' % (str(inputt), data))
+        p0 = Pool(5)
+        p0.apply_async(data, args=(s,))
+        p0.apply_async(twitter, args=(s,))
+        p0.close()
+        p0.join()
 
 
 if __name__ == "__main__":

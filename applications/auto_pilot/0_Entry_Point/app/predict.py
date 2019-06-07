@@ -2,10 +2,10 @@
 
 import time
 
-def predict(input):
+def predict(info):
 	start = time.time()
 	end = time.time()
 	print("ELASPSED TIME", (end-start)*1000)
-	return input
+	return info
 
 

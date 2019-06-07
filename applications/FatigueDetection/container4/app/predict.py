@@ -84,7 +84,11 @@ def predict(imagestring):
             count+=1
         else :
             points.append(None)
-    
+    if count==0:
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c4]\t", str(t2))
+        print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+        return None
     add=add/count
     variance=(square-add*add)/(count-1)     
     print("\n[INFO] Pose Detection FINISHED!")

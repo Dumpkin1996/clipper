@@ -138,7 +138,5 @@ def run():
                     print('Request %s received output:\n%s' % (str(inputt), data))
 
 
-
-
 if __name__ == "__main__":
     run()

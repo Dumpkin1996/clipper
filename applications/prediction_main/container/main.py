@@ -87,7 +87,7 @@ def data(s):
     returned_result_list.append(p.apply_async(run_arima, args=(stock_data,)))
     p.close()
     p.join()
-    print("result list with len", len(returned_result_list), "is ", returned_result_list)
+    print("result list with len", len(returned_result_list), "is", returned_result_list)
     return returned_result_list
 
 def twitter(s):

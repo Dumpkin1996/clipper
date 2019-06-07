@@ -136,13 +136,14 @@ def run():
     #                 print('%s generated an exception: %s' % (str(inputt), exc))
     #             else:
     #                 print('Request %s received output:\n%s' % (str(inputt), data))
-
+    start = time.time()
     for s in l98:
-        p0 = Pool(5)
+        p0 = Pool(2)
         p0.apply_async(data, args=(s,))
         p0.apply_async(twitter, args=(s,))
         p0.close()
         p0.join()
+        print("Total time", time.time()-start)
 
 
 if __name__ == "__main__":

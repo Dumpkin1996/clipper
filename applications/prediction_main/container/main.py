@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import time
 import io
+from concurrent import futures
+import threading
 
 import sys
 sys.path.append("/container")
@@ -92,10 +94,8 @@ def data(s):
 
 def twitter(s):
     # CONTAINER 2: Twitter Collector
-    tweet_number = 1000
     twitter_data = c2.predict(s + ":2018:1:1")
     print("Twitter data Retrieval FINISHED")
-    print("Successfully retrieved", tweet_number, "number of tweets.")
     #print("Here are the first 200 characters:")
     #print(twitter_data[:200])
     print("")
@@ -124,18 +124,20 @@ def run():
 
     l100 = ['HAS', 'IRM', 'TEL', 'EL', 'ESS', 'COP', 'KEY', 'FE', 'CBS', 'IFF', 'NOV', 'IRM', 'FL', 'BBY', 'MS', 'FAST', 'CRM', 'NUE', 'MSCI', 'MMC', 'AIG', 'WELL', 'STT', 'CMA', 'RMD', 'FB', 'FB', 'IFF', 'WU', 'USB', 'NI', 'EA', 'TRIP', 'HAL', 'EBAY', 'AON', 'MS', 'TXN', 'USB', 'IRM', 'CE', 'BK', 'ROL', 'ANTM', 'NVDA', 'SEE', 'CNC', 'DXC', 'APA', 'APA', 'UPS', 'DOW', 'CAT', 'MET', 'HIG', 'LOW', 'CAT', 'VZ', 'MSCI', 'MA', 'BEN', 'RMD', 'BEN', 'HPE', 'PGR', 'CNC', 'PH', 'PGR', 'MAC', 'NOV', 'BEN', 'ICE', 'TAP', 'ABC', 'MMC', 'ESS', 'COST', 'HD', 'CVS', 'KIM', 'CAG', 'CNC', 'UPS', 'MO', 'BEN', 'FL', 'GS', 'EL', 'CMA', 'FE', 'IP', 'KIM', 'LOW', 'CF', 'NUE', 'FL', 'USB', 'CBS', 'RF', 'CMA']
 
-    for s in l98:
-        
-        p = Pool(2)
-        returned_result_list = p.apply_async(data, args=(s,))
-        polarity_list = p.apply_async(twitter, args=(s,))
-        p.close()
-        p.join() # p.join()方法会等待所有子进程执行完毕
 
-        # CONTAINER 11: Weighting Algorithm
-        final_prediction = c11.predict(str(returned_result_list))
-        print("\n\nEntire Process FINISHED")
-        print("Total Time:", time.time()-start)
+    for s in l98:
+        with futures.ThreadPoolExecutor(max_workers=2) as executor:
+            inputt_list = l98
+            future_to_excute = [executor.submit(data, s), executor.submit(twitter, s)]
+            for future in futures.as_completed(future_to_excute):
+                try:
+                    data = future.result()
+                except Exception as exc:
+                    print('%s generated an exception: %s' % (str(inputt), exc))
+                else:
+                    print('Request %s received output:\n%s' % (str(inputt), data))
+
+
 
 
 if __name__ == "__main__":

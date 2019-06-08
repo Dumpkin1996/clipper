@@ -1,16 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 22 15:03:22 2019
-
-@author: davidzhou
-"""
-
 import cv2
 import numpy as np
 import os
 import json
-
+import time
+from datetime import datetime
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -25,8 +18,8 @@ def string_image(imagestring):
     return image
 
 
-protoFile = "/container/container4/app/pose_deploy_linevec.prototxt"
-weightsFile = "/container/container4/app/pose_iter_440000.caffemodel"
+protoFile = "/container/pose_deploy_linevec.prototxt"
+weightsFile = "/container/pose_iter_440000.caffemodel"
 net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
 nPoints = 18
 POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[1,8],[8,9],[9,10],[1,11],[11,12],[12,13],[0,14],[0,15],[14,16],[15,17]]
@@ -35,7 +28,19 @@ POSE_PAIRS = [ [1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[1,8],[8,9],[9,10],[1,1
 inWidth = 368
 inHeight = 368
 
+COUNT=0
+
+
 def predict(imagestring):
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c4]\t", str(t1))
+    
+    if imagestring is None:
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c4]\t", str(t2))
+        print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+        print("\n[INFO] Pose Detection FINISHED!")
+        return False
     frame=string_image(imagestring)
     frameCopy = np.copy(frame)
     frameWidth = frame.shape[1]
@@ -79,37 +84,33 @@ def predict(imagestring):
             count+=1
         else :
             points.append(None)
-    
+    if count==0:
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c4]\t", str(t2))
+        print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+        return None
     add=add/count
-    variance=(square-add*add)/(count-1)
+    variance=(square-add*add)/(count-1)     
+    print("\n[INFO] Pose Detection FINISHED!")
     
-    # Draw Skeleton
-    for pair in POSE_PAIRS:
-        partA = pair[0]
-        partB = pair[1]
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c4]\t", str(t2))
+    print("[INFO]\t", "[c4]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
     
-        if points[partA] and points[partB]:
-            cv2.line(frame, points[partA], points[partB], (0, 255, 255), 2)
-            cv2.circle(frame, points[partA], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
-
-    #memchached
-    #if not os.path.exists('poses'):
-     #       print("[INFO] New directory created")
-      #      os.makedirs('poses')
-    #cv2.imwrite('poses/Output-Keypoints.jpg', frameCopy)
-    #cv2.imwrite('poses/Output-Skeleton.jpg', frame)
-    #cv2.imshow('Output-Keypoints', frameCopy)
-    #cv2.imshow('Output-Skeleton', frame)
-    #cv2.waitKey(0)
-    if variance>20000:
-        return True
+    if COUNT > 6:
+        return "True"
     else:
-        return False
+        return "False"
+    if variance>20000:
+        COUNT=COUNT+1
+        print("\n[INFO] WARNING! MAY BE TIRED!")
+    else:
+        COUNT=COUNT-1
+    
+   
+    
 
 
-#frame = cv2.imread("awake.jpg")
-#mystr=image_string(frame)
-#x=predict(mystr)
 
         
         

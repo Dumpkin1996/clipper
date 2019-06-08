@@ -1,14 +1,16 @@
 import numpy as np
+import time
 #import skimage.io
 #import matplotlib as mpl
 #mpl.use('TkAgg')
 #import matplotlib.pyplot as plt
 import cv2
 import json
-from container3.app.samples.coco import coco
-import container3.app.mrcnn.model as modellib
+from samples.coco import coco
+import mrcnn.model as modellib
+import tensorflow as tf
 #import imgaug
-
+from datetime import datetime
 def image_string(image):
     image_encode=cv2.imencode('.jpg',image)[1]
     imagelist=image_encode.tolist()
@@ -52,11 +54,14 @@ config.display()
 model = modellib.MaskRCNN(mode="inference", model_dir="logs", config=config)
 
 # Load weights trained on MS-COCO
-model.load_weights("/container/container3/app/mask_rcnn_coco.h5", by_name=True)
+model.load_weights("/container/mask_rcnn_coco.h5", by_name=True)
+
 
 def predict(imstr):
-    image=string_image(imstr)
+    t1 = datetime.utcnow()
+    print("\n[INFO]\t", "[c3]\t", str(t1))
     
+    image=string_image(imstr)
     # Run detection
     results = model.detect([image], verbose=1)
     
@@ -69,25 +74,27 @@ def predict(imstr):
         r['rois']=np.array([r['rois'][pos]])
         r['scores']=np.array([r['scores'][pos]])
     else:
+        t2 = datetime.utcnow()
+        print("[INFO]\t", "[c3]\t", str(t2))
+        print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
         return None
     prediction=make_box_mask(image, r['rois'].tolist()[0])
     imagestring=image_string(prediction)
+    print("\n[INFO] HUMAN SEGMENTATION FINISHED!")
+    
+    t2 = datetime.utcnow()
+    print("[INFO]\t", "[c3]\t", str(t2))
+    print("[INFO]\t", "[c3]\tTime elapsed: ", (t2-t1).total_seconds(), " seconds." )
+    
     return imagestring
     
-    
-#visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 
 def make_box_mask(image, xy):    
     target = image[xy[0]:xy[2], xy[1]:xy[3], :]
     img = np.zeros_like(image)
     img[xy[0]:xy[2], xy[1]:xy[3], :] = target
     return target
-#    cv2.imwrite("masked.jpg",target)
-#    plt.imshow(img)
-    
-#image = cv2.imread("simple.jpg")
-#string=image_string(image)
-#x=predict(string)
+
 
 
 

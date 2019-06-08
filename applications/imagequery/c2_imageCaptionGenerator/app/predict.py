@@ -27,22 +27,37 @@ def find(name, path):
 checkpoint_path = "/container/im2txt/model/newmodel.ckpt-2000000"
 vocabulary_path = "/container/im2txt/data/word_counts.txt"
 
+# Run run_inference.py, here the image.jpg is just the testing image for setting up the tensorflow environment
+run_inference_path = find("run_inference.py", "/")
+model_dir_path = find("model", "/container")
+check_point_path = model_dir_path + "/newmodel.ckpt-2000000"
+vocabulary_path = find("word_counts.txt", "/")
+# image_path = find("image.jpg", "/")
+# setupTensorflowEnvironmentCmd = "python " + run_inference_path + " --checkpoint_path " + check_point_path + " --vocab_file " + vocabulary_path + " --input_files " + image_path
+# os.system(setupTensorflowEnvironmentCmd)
+
+
+# FLAGS = tf.flags.FLAGS
+#tf.flags.DEFINE_string("checkpoint_path", "", "Model checkpoint file or directory containing a model checkpoint file.")
+#tf.flags.DEFINE_string("vocab_file", "", "Text file containing the vocabulary.")
+#tf.flags.DEFINE_string("input_files", "", "File pattern or comma-separated list of file patterns of image files.")
+
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Build the inference graph.
 g = tf.Graph()
 with g.as_default():
     model = inference_wrapper.InferenceWrapper()
-    restore_fn = model.build_graph_from_config(
-        configuration.ModelConfig(), checkpoint_path)
+    restore_fn = model.build_graph_from_config(configuration.ModelConfig(), check_point_path)
 g.finalize()
 
 # Create the vocabulary.
 vocab = vocabulary.Vocabulary(vocabulary_path)
 
-###### Specify GPU allocation to avoid CUDA_ERROR_OUT_OF_MEMORY #####
-# Reference1: https://blog.csdn.net/wangkun1340378/article/details/72782593
-config = tf.ConfigProto(allow_soft_placement=True)
+# filenames = []
+# for file_pattern in FLAGS.input_files.split(","):
+#     filenames.extend(tf.gfile.Glob(file_pattern))
+# tf.logging.info("Running caption generation on %d files matching %s", len(filenames), FLAGS.input_files)
 
 # 最多占gpu资源的30%
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
@@ -67,9 +82,7 @@ restore_fn(sess)
 # Prepare the caption generator.
 generator = caption_generator.CaptionGenerator(model, vocab)
 
-load_end = timer()
-print("Finish preloading modules in " + str(load_end - load_start) + " seconds!")
-   
+print("Finished building inference graph and creating vocabulary list...")
 
 
 def predict(image_file_index):
@@ -79,8 +92,11 @@ def predict(image_file_index):
     if image_file_index > 1000:
         return "Invalid image file index! Only index between 1 to 1000 is allowed!"
 
-    image_file_path = "/container/im2txt/data/imageDataset/101_ObjectCategories/" + str(image_file_index) + ".jpg"
+    start = timer()
+    image_file_path = "/container/data/imageDataset/101_ObjectCategories/image_" + \
+        str(image_file_index).zfill(4) + ".jpg"
 
+    # added by YIN Yue
     captionList = ["", "", ""]
     with tf.gfile.GFile(image_file_path, "rb") as f:
         image = f.read()
@@ -104,9 +120,7 @@ def predict(image_file_index):
     return generated_caption
 
 
-if __name__ == "__main__":
-    print(predict(1))
-    print(predict(2))
-    print(predict(3))
-    print(predict(4))
 
+
+# if __name__ == "__main__":
+#     tf.app.run()
